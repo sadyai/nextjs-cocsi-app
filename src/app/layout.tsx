@@ -4,16 +4,16 @@ import "./globals.css";
 import Navbar01Page from "@/components/navbar-01/navbar-01";
 
 const k2D = K2D({
-  subsets: ["thai"],
-  weight:['100','200','300','400','500','600','700','800'],
-  display:'swap'
+   subsets: ['thai'],
+   weight: ['100','200', '300', '400', '500', '600', '700', '800'],
+   display: 'swap',
 });
 
 export const metadata: Metadata = {
-  title: "ระบบการขายสินค้า",
-  description: "ขายสินค้าประจำปี2025",
+  title: "ระบบขายสินค้า COSCI Shop",
+  description: "ขายสินค้าของนักศึกษา ประจำปี 2568",
 };
-  
+
 export default function RootLayout({
   children,
 }: Readonly<{
@@ -24,8 +24,8 @@ export default function RootLayout({
       <body
         className={`${k2D.className}`}
       >
-        <Navbar01Page/>
-        <hr />
+        <Navbar01Page />
+        
         {children}
       </body>
     </html>
