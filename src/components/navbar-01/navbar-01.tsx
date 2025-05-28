@@ -2,10 +2,11 @@ import { Button } from "@/components/ui/button";
 import { Logo } from "./logo";
 import { NavMenu } from "./nav-menu";
 import { NavigationSheet } from "./navigation-sheet";
+import Link from "next/link";
 
 const Navbar01Page = () => {
   return (
-    <div className="\bg-muted">
+    <div className="bg-muted">
       <nav className="h-16 bg-background border-b">
         <div className="h-full flex items-center justify-between max-w-screen-xl mx-auto px-4 sm:px-6 lg:px-8">
           <Logo />
@@ -14,10 +15,12 @@ const Navbar01Page = () => {
           <NavMenu className="hidden md:block" />
 
           <div className="flex items-center gap-3">
-            <Button variant="outline" className="hidden sm:inline-flex">
-              Sign In
+            <Button asChild variant="outline" className="hidden sm:inline-flex">
+              <Link href="/login">เข้าสู่ระบบ</Link>
             </Button>
-            <Button>Get Started</Button>
+            <Button asChild>
+              <Link href="/signup">สมัครสมาชิก</Link>
+            </Button>
 
             {/* Mobile Menu */}
             <div className="md:hidden">
