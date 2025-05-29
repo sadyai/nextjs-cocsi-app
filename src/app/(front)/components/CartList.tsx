@@ -1,6 +1,6 @@
 'use client'
 
-import { Table, TableHead, TableHeader, TableRow } from "@/components/ui/table";
+import { Table, TableBody, TableCell, TableHead, TableHeader, TableRow } from "@/components/ui/table";
 import { useCartStore } from "@/lib/cart-store"
 
 export default function CartList() {
@@ -24,6 +24,19 @@ export default function CartList() {
                         <TableHead>รวม</TableHead>
                     </TableRow>
                 </TableHeader>
+                <TableBody>
+                    {
+                    items.map((i) => (
+                        <TableRow key={i.productId}>
+                            <TableCell>{i.productId}</TableCell>
+                            <TableCell>{i.title}</TableCell>
+                            <TableCell>{i.price}</TableCell>
+                            <TableCell>{i.qty}</TableCell>
+                            <TableCell>{i.price * i.qty}</TableCell>
+                        </TableRow>
+                    ))
+                    }
+                </TableBody>
             </Table>
         </div>
     )
