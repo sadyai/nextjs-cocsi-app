@@ -4,8 +4,10 @@ import { Button } from "@/components/ui/button";
 import { Table, TableBody, TableCell, TableHead, TableHeader, TableRow } from "@/components/ui/table";
 import { useCartStore } from "@/lib/cart-store"
 import { Trash } from "lucide-react";
+import { useRouter } from "next/navigation";
 
 export default function CartList() {
+    const router = useRouter();
 
     const items = useCartStore((state) => state.items);
     const removeItem = useCartStore((state) => state.removeItem);
@@ -21,7 +23,7 @@ export default function CartList() {
     }
 
     return (
-        <div className="max-auto max-w-4xl mt-20">
+        <div className="mx-auto max-w-4xl mt-20">
             <h1 className="text-xl mb-4">ตะกร้าสินค้า</h1>
             <Table>
                 <TableHeader>
@@ -56,10 +58,9 @@ export default function CartList() {
             <div className="text-right mt-5">
                     รวมทั้งหมด: {totalPrice.toFixed(2)} บาท
             </div>
-            <div>
-                <Button onClick={() => clearCart()} className="mt-5">
-                    ล้างตะกร้าสินค้า
-                </Button>
+            <div className="text-right mt-4">
+                <Button onClick={() => clearCart()} className="mt-5" variant={"outline"}>ล้างตะกร้าสินค้า</Button>
+                <Button onClick={() => {router.replace('/product')}}>ยืนยันการสั่งซื้อ</Button>
             </div>
         </div>
         
