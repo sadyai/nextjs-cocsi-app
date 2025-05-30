@@ -6,9 +6,14 @@ import Link from "next/link";
 import { ShoppingBasket } from "lucide-react";
 import { Badge } from "../ui/badge";
 import CountCartItem from "@/app/(front)/components/CountCartItem";
+import { headers } from "next/headers";
+import { auth } from "@/lib/auth";
 
 
-const Navbar01Page = () => {
+const Navbar01Page = async () => {
+  const session =  await auth.api.getSession({
+    headers: await headers()
+  })
   return (
     <div className="bg-muted">
       <nav className="h-16 bg-background border-b">
