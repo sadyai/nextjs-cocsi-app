@@ -1,5 +1,6 @@
 "use client";
 
+import { authClient } from "@/lib/auth-client"; 
 import { Button } from "@/components/ui/button";
 import {
   Form,
@@ -15,23 +16,46 @@ import { zodResolver } from "@hookform/resolvers/zod";
 import Link from "next/link";
 import { useForm } from "react-hook-form";
 import { z } from "zod";
+import { useRouter } from "next/navigation";
 
 const formSchema = z.object({
+  name: z.string().min(1, "กรุณากรอกชื่อของคุณ"), 
   email: z.string().email("รูปแบบอีเมลไม่ถูกต้อง"),
   password: z.string().min(8, "รหัสผ่อนไม่ควรน้อยกว่า 8 ตัวอักษร"),
 });
 
 const SignUP01Page = () => {
+  const router = useRouter();
   const form = useForm<z.infer<typeof formSchema>>({
     defaultValues: {
+      name: "",
       email: "",
       password: "",
     },
     resolver: zodResolver(formSchema),
   });
 
-  const onSubmit = (data: z.infer<typeof formSchema>) => {
-    console.log(data);
+  const onSubmit = async (form: z.infer<typeof formSchema>) => {
+
+    await authClient.signUp.email({
+        name:form.name, // user display name
+        email:form.email, // user email address
+        password:form.password, // user password -> min 8 characters by default
+        callbackURL: "/login" // A URL to redirect to after the user verifies their email (optional)
+    }, {
+        onRequest: (ctx) => {
+            console.log(ctx.body);
+        },
+        onSuccess: (ctx) => {
+            console.log(ctx.data);
+            router.replace("/login");
+        },
+        onError: (ctx) => {
+            // display the error message
+            alert(ctx.error.message);
+        },
+});
+
   };
 
   return (
@@ -51,6 +75,24 @@ const SignUP01Page = () => {
             className="w-full space-y-4"
             onSubmit={form.handleSubmit(onSubmit)}
           >
+            <FormField
+              control={form.control}
+              name="name"
+              render={({ field }) => (
+                <FormItem>
+                  <FormLabel>Name</FormLabel>
+                  <FormControl>
+                    <Input
+                      type="text"
+                      placeholder="Your Name"
+                      className="w-full"
+                      {...field}
+                    />
+                  </FormControl>
+                  <FormMessage />
+                </FormItem>
+              )}
+            />
             <FormField
               control={form.control}
               name="email"
@@ -88,7 +130,7 @@ const SignUP01Page = () => {
               )}
             />
             <Button type="submit" className="mt-4 w-full">
-              Continue with Email
+              Comfirm Sign Up
             </Button>
           </form>
         </Form>
