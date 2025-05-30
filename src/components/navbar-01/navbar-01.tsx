@@ -9,11 +9,10 @@ import CountCartItem from "@/app/(front)/components/CountCartItem";
 import { headers } from "next/headers";
 import { auth } from "@/lib/auth";
 
-
 const Navbar01Page = async () => {
-  const session =  await auth.api.getSession({
-    headers: await headers()
-  })
+  const session = await auth.api.getSession({
+    headers: await headers(),
+  });
   return (
     <div className="bg-muted">
       <nav className="h-16 bg-background border-b">
@@ -24,16 +23,33 @@ const Navbar01Page = async () => {
           <NavMenu className="hidden md:block" />
 
           <div className="flex items-center gap-3">
-
             <Link href="/cart">
-            <Badge className="p-2 text-sm"><ShoppingBasket /> <CountCartItem/> item (s)</Badge>
-              </Link>
-            <Button asChild variant="outline" className="hidden sm:inline-flex">
-              <Link href="/login">เข้าสู่ระบบ</Link>
-            </Button>
-            <Button asChild>
-              <Link href="/signup">สมัครสมาชิก</Link>
-            </Button>
+              <Badge className="p-2 text-sm">
+                <ShoppingBasket /> <CountCartItem /> item (s)
+              </Badge>
+            </Link>
+            {!session && (
+              <>
+                <Button
+                  asChild
+                  variant="outline"
+                  className="hidden sm:inline-flex"
+                >
+                  <Link href="/login">เข้าสู่ระบบ</Link>
+                </Button>
+                <Button asChild>
+                  <Link href="/signup">สมัครสมาชิก</Link>
+                </Button>
+              </>
+            )}
+
+            {session && (
+              <>
+                <Button asChild variant="outline">
+                  <Link href="/dashboard">แดชบอร์ด</Link>
+                </Button>
+              </>
+            )}
 
             {/* Mobile Menu */}
             <div className="md:hidden">

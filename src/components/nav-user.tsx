@@ -30,7 +30,7 @@ import {
 } from "@/components/ui/sidebar"
 import { useRouter } from "next/navigation"
 import { authClient } from "@/lib/auth-client"
-const router = useRouter();
+
 
 export function NavUser({
   user,
@@ -41,6 +41,7 @@ export function NavUser({
     avatar: string
   }
 }) {
+  const router = useRouter();
   const { isMobile } = useSidebar()
 
   return (
