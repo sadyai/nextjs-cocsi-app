@@ -1,4 +1,5 @@
 import { mysqlTable,primaryKey, int, varchar, decimal, timestamp, boolean, text } from "drizzle-orm/mysql-core"
+import { sql } from "drizzle-orm"
 
 export const product = mysqlTable("product", {
     id: int({ unsigned: true }).autoincrement().notNull(),
